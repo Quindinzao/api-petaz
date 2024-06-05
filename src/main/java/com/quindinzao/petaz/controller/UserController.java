@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -20,10 +21,14 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<String> createUser(@RequestBody User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            return ResponseEntity.badRequest().body("This email already exists");
+            return ResponseEntity.badRequest().body("This email already exists!");
+        } else if (Objects.equals(user.getName(), "") || Objects.equals(user.getEmail(), "") || Objects.equals(user.getPassword(), "")) {
+            return ResponseEntity.badRequest().body("Invalid name, email or password!");
+        } else if (user.getDocument().length() != 11 || user.getDocument().length() != 14) {
+            return ResponseEntity.badRequest().body("Your document must be 11 or 14 characters long!");
         }
         userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok("User registered successfully!");
     }
 
     @PostMapping("/auth")
