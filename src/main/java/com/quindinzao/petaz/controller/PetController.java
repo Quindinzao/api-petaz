@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/pets")
@@ -18,10 +19,12 @@ public class PetController {
     @PostMapping
     public ResponseEntity<Object> createPet(@RequestBody Pet pet) {
         User user = pet.getUser();
-        if (user.getDocument().length() == 11) {
-            return ResponseEntity.ok(petRepository.save(pet));
-        } else {
+        if (user.getDocument().length() != 11) {
             return ResponseEntity.badRequest().body("CNPJ users can't add pets!");
+        } else if (Objects.equals(pet.getName(), "") || Objects.equals(pet.getSpecies(), "")) {
+            return ResponseEntity.badRequest().body("Invalid name or specie!");
+        } else {
+            return ResponseEntity.ok(petRepository.save(pet));
         }
     }
 
