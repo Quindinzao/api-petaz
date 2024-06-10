@@ -2,7 +2,7 @@ package com.quindinzao.petaz.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="appointments")
@@ -13,14 +13,6 @@ public class Appointment {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "user_cpf_id")
-    private User userCpf;
-
-    @ManyToOne
-    @JoinColumn(name = "user_cnpj_id")
-    private User userCnpj;
-
-    @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
@@ -28,15 +20,13 @@ public class Appointment {
     @JoinColumn(name = "service_id")
     private Service service;
 
-    private LocalDateTime appointmentTime;
+    private LocalDate appointmentTime;
 
     // Constructors
     public Appointment() {}
 
-    public Appointment(Long id, User userCpf, User userCnpj, Pet pet, Service service, LocalDateTime appointmentTime) {
+    public Appointment(Long id, Pet pet, Service service, LocalDate appointmentTime) {
         this.id = id;
-        this.userCpf = userCpf;
-        this.userCnpj = userCnpj;
         this.pet = pet;
         this.service = service;
         this.appointmentTime = appointmentTime;
@@ -49,22 +39,6 @@ public class Appointment {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public User getUserCpf() {
-        return userCpf;
-    }
-
-    public void setUserCpf(User userCpf) {
-        this.userCpf = userCpf;
-    }
-
-    public User getUserCnpj() {
-        return userCnpj;
-    }
-
-    public void setUserCnpj(User userCnpj) {
-        this.userCnpj = userCnpj;
     }
 
     public Pet getPet() {
@@ -83,11 +57,11 @@ public class Appointment {
         this.service = service;
     }
 
-    public LocalDateTime getAppointmentTime() {
+    public LocalDate getAppointmentTime() {
         return appointmentTime;
     }
 
-    public void setAppointmentTime(LocalDateTime appointmentTime) {
+    public void setAppointmentTime(LocalDate appointmentTime) {
         this.appointmentTime = appointmentTime;
     }
 }

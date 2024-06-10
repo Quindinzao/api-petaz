@@ -24,11 +24,14 @@ public class UserController {
             return ResponseEntity.badRequest().body("This email already exists!");
         } else if (Objects.equals(user.getName(), "") || Objects.equals(user.getEmail(), "") || Objects.equals(user.getPassword(), "")) {
             return ResponseEntity.badRequest().body("Invalid name, email or password!");
-        } else if (user.getDocument().length() != 11 || user.getDocument().length() != 14) {
-            return ResponseEntity.badRequest().body("Your document must be 11 or 14 characters long!");
         }
-        userRepository.save(user);
-        return ResponseEntity.ok("User registered successfully!");
+//        else if (user.getDocument().length() != 11 || user.getDocument().length() != 14) {
+//            return ResponseEntity.badRequest().body("Your document must be 11 or 14 characters long!");
+//        }
+        else {
+            userRepository.save(user);
+            return ResponseEntity.ok("User registered successfully!");
+        }
     }
 
     @PostMapping("/auth")

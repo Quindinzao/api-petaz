@@ -31,4 +31,9 @@ public class ServiceController {
     public List<Service> getServicesByUserDocument(@PathVariable String document) {
         return serviceRepository.findByUserDocument(document);
     }
+
+    @GetMapping("/all-services")
+    public List<Service> getAllServices() {
+        return serviceRepository.findAll();
+    }
 }
